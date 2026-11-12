@@ -202,7 +202,7 @@ def admission(n: int, seed: int) -> Dict[str, int]:
         acc = {st: rng.choice(["none", "ro", "rw"]) for st in s.stores}
         new = Compartment("w", "other", True, "host", acc, set(), set(), spawn=[])
         task_from = set(rng.sample(nodes, rng.randint(0, 2)))
-        host_ports = [v for v in g if v.startswith("@host>")]
+        host_ports = sorted(v for v in g if v.startswith("@host>"))
         result_to = set(rng.sample(host_ports, min(len(host_ports), rng.randint(0, 1))))
         inflow, outflow = ic.flows_of(s, new, "access", task_from, result_to)
         fwd = s.forward_set(g, sources, mediators)
