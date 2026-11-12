@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded checks of the theorem statements in "Membranes for Machine Workers".
+"""Bounded checks of the theorem statements in "Independence by Access".
 
 These are not proofs. Each theorem is proved in the paper. This program tests each
 statement on every small instance, or on many random ones, so that a wrong statement

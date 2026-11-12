@@ -1,6 +1,6 @@
 /-
   Machine-checked statements for the paper
-  "Membranes for Machine Workers: A Compartment Model of Separation of Duties
+  "Independence by Access: A Colony Model of Separation of Duties
    in Autonomous AI Pipelines".
 
   Lean 4, core library only (no Mathlib).  Checked with Lean 4.35.0:   lean Membrane.lean
