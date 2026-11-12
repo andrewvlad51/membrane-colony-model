@@ -497,9 +497,9 @@ def reference_ro_spec_maker() -> System:
 
 
 def observed() -> System:
-    """Independence partly by instruction: levels recorded for a production pipeline.
+    """Independence partly by instruction: levels recorded for an operational pipeline.
 
-    The reference topology with the access levels recorded for one production
+    The reference topology with the access levels recorded for one operational
     pipeline's maker and review roles: `rw` on the code host and `ro` on
     the request tracker. The workflow tells the maker not to push and tells two of
     the three review roles not to write. The blind extractor is cut by access.
@@ -507,7 +507,7 @@ def observed() -> System:
     recorded keep their reference levels.
     """
     s = reference()
-    s.name = "Prod    recorded production levels"
+    s.name = "Prod    recorded operational levels"
     for n in ("implementer", "reviewer_a", "reviewer_b", "reconciler"):
         s.comps[n].acc["codehost"] = "rw"
         s.comps[n].acc["tracker"] = "ro"
