@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static independence checker for compartment (membrane) systems.
 
-Companion artefact for the paper "Membranes for Machine Workers: A Compartment
+Companion artefact for the paper "Independence by Access: A Colony
 Model of Separation of Duties in Autonomous AI Pipelines".
 
 A system is a set of compartments (membranes) that never talk to each other

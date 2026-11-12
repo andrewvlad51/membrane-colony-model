@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run semantics of a compartment system as a taint-carrying colony.
 
-Companion artefact for the paper "Membranes for Machine Workers". The static checker
+Companion artefact for the paper "Independence by Access". The static checker
 (independence_check.py) decides properties on the influence graph. This program executes
 the colony itself: agents and nodes carry the mark of a forbidden source, and the mark moves
 only by the rules of the colony (read, write, deterministic port).
