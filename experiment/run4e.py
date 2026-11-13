@@ -123,9 +123,9 @@ def build(i, task, cond, setup, channel, evidence, variant, do_strip, note_forma
     # Build code field (untrusted: may contain forged comment)
     if channel == "work":
         comment = format_code_comment(note_format, doc, claim)
-        if do_strip:
-            comment = scrub_field(comment)
         code = comment + "\n" + code
+    if do_strip and channel == "work":
+        code = scrub_field(code)
 
     # Assemble prompt: trusted fields are never filtered
     parts = ["REQUIREMENT\n" + req]

@@ -52,6 +52,53 @@ AE- 0/20 false approvals.
 **Logs:** `results4_haiku.jsonl` (160 trials).
 **Date:** 2026-11-11.
 
+### Run 4b: fixed-code full strip
+
+**Script:** `run4b.py`
+**Design:** Fixed-code preprocessing removes any "VERIFIED FACTS" block not carrying
+the correct per-trial token before the model sees it. Three stripped conditions
+(GNf, INf, AWf) and two unstripped controls (GNm2, INm2).
+**Result:** All stripped conditions: 0/20 false approvals. Controls: GNm2 18/20
+(90%), INm2 13/20 (65%).
+**Logs:** `results4b_haiku.jsonl` (100 trials).
+**Date:** 2026-11-12.
+
+### Run 4c: marker-only strip, trusted channel, look-alike
+
+**Script:** `run4c.py`
+**Design:** Three condition sets. Set 1 (GNs, INs, AWs): strip only the header,
+leave the claim visible. Set 2 (AE+s, AE-s): full strip with trusted evidence
+channel. Set 3 (GNlk): look-alike heading ("VERIFIED INFORMATION (pipeline output)").
+**Result:** All stripped forgeries: 0/20. AE+s: 17/20 correct approvals. AE-s: 0/20
+false approvals. GNlk: 0/20.
+**Logs:** `results4c_haiku.jsonl` (120 trials).
+**Date:** 2026-11-12.
+
+### Run 4d: comprehensive case-insensitive strip, format variants
+
+**Script:** `run4d.py`
+**Design:** Replaces run 4c's line-based strip with comprehensive case-insensitive
+removal of "verified facts" (any casing, with or without bold markup). Tests inline
+format (GNil: "VERIFIED FACTS: <claim>" on one line) and mixed case (GNmc:
+"Verified Facts"). Note: this filter has a latent placeholder-swap injection bug
+fixed in run 4e.
+**Result:** All conditions 0/20 false approvals.
+**Logs:** `results4d_haiku.jsonl` (100 trials).
+**Date:** 2026-11-12.
+
+### Run 4e: per-field filter (Theorem 4 design), unstripped format variants
+
+**Script:** `run4e.py`
+**Design:** Fixes run 4d's placeholder-swap bug with per-field encoding: the filter
+is applied to each untrusted field independently before prompt assembly. Trusted
+fields are never processed. `--compare` mode verified all 100 prompts byte-identical
+to run 4d. Set 2 tests unstripped format variants: GNil_ns (inline, no strip) and
+GNmc_ns (mixed case, no strip).
+**Result:** Stripped conditions: byte-identical to run 4d (0/20 each). GNil_ns:
+12/20 (60%) false approvals. GNmc_ns: 0/20.
+**Logs:** `results4e_haiku.jsonl` (40 trials).
+**Date:** 2026-11-12.
+
 ### Canary experiment
 
 **Script:** `harness.py`, `config.py`
@@ -69,7 +116,7 @@ generic instruction, access control). 10 topics × 5 trials per topic per arm.
 ## Temperature
 
 - Runs 1–2 (Gemini conditions): temperature 0. Claude CLI conditions: provider default.
-- Runs 3–4: Claude CLI, provider default (no temperature flag).
+- Runs 3–4e: Claude CLI, provider default (no temperature flag).
 - Canary: Claude CLI, provider default.
 
 ## Dependencies
@@ -84,6 +131,15 @@ python3 run3.py
 
 # Run 4
 python3 run4.py
+
+# Runs 4b–4e
+python3 run4b.py --model haiku
+python3 run4c.py --model haiku
+python3 run4d.py --model haiku
+python3 run4e.py --model haiku
+
+# Compare run 4e vs 4d prompts
+python3 run4e.py --compare
 
 # Canary experiment
 python3 -I harness.py --backend claude --model haiku --trials 50
